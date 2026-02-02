@@ -1,0 +1,41 @@
+:root {
+  --counter: 30;
+  --select-color: white;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.sheet {
+  width: 80vmin;
+  height: 80vmin;
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid hsl(0, 0%, 0%);
+  /* 0-360 50-100 40-50 */
+}
+
+.pixel {
+  width: calc(100% / var(--counter));
+  aspect-ratio: 1/1;
+  user-select: none;
+
+  border: 1px solid rgba(255, 255, 255, 0);
+  box-sizing: border-box;
+}
+
+.pixel:hover {
+  border: 1px solid lightgrey;
+}
