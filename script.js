@@ -112,3 +112,48 @@ const getRandomRainbowColor = () => {
   let currentColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   return currentColor;
 };
+
+// === Копипаста из DeepSeek. Поддержка телефонов ===
+
+// 1. CSS через JS (на всякий случай)
+sheet.style.touchAction = "none";
+sheet.style.userSelect = "none";
+
+// 2. Touch события
+sheet.addEventListener(
+  "touchstart",
+  (e) => {
+    e.preventDefault();
+    isHoldMouse = true;
+    handleTouch(e);
+  },
+  { passive: false },
+);
+
+sheet.addEventListener(
+  "touchmove",
+  (e) => {
+    e.preventDefault();
+    handleTouch(e);
+  },
+  { passive: false },
+);
+
+window.addEventListener("touchend", () => {
+  isHoldMouse = false;
+});
+
+function handleTouch(e) {
+  const touch = e.touches[0];
+  const elem = document.elementFromPoint(touch.clientX, touch.clientY);
+
+  if (elem && elem.classList.contains("pixel")) {
+    if (e.type === "touchstart") {
+      // Первое касание
+      coloring({ target: elem });
+    } else if (e.type === "touchmove" && isHoldMouse) {
+      // Движение пальцем
+      coloring({ target: elem });
+    }
+  }
+}
