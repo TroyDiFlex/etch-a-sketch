@@ -7,6 +7,28 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <header>
+      <div class="menu select-color">
+        <input type="color" id="colorPicker" value="#ff0000" />
+      </div>
+      <div class="menu">
+        <button id="solid-coloring" type="button">Обычный режим</button>
+      </div>
+      <div class="menu">
+        <button id="eraser" type="button">Ластик</button>
+      </div>
+      <div class="menu">
+        <button id="rainbow" type="button">Радужный режим</button>
+      </div>
+      <div class="menu">
+        <button id="clear" type="button">Стереть всё</button>
+      </div>
+      <div class="menu">
+        <div id="input-display">32 x 32</div>
+        <input type="range" id="input-range" min="8" max="64" value="32" />
+      </div>
+    </header>
+
     <div class="sheet">
       <!-- <div draggable="false" class="pixel"></div> -->
     </div>
