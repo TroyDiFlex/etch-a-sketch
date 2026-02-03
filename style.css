@@ -64,3 +64,23 @@ header {
 .pixel:hover {
   border: 1px solid lightgrey;
 }
+
+/* Копипаста из DeepSeek. Поддержка телефонов*/
+.sheet {
+  touch-action: none; /* Отключает ВСЕ touch-жесты */
+  -webkit-touch-callout: none; /* Для Safari/iOS */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.pixel {
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent; /* Убирает синее выделение на iOS */
+}
+
+/* Также для всего документа */
+body {
+  margin: 0;
+  overflow: hidden; /* Убирает прокрутку вообще */
+  height: 100vh;
+}
