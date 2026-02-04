@@ -132,7 +132,7 @@ const coloring = (event) => {
 
       break;
     case "rainbow":
-      let randomColor = getRandomRainbowColor();
+      let randomColor = getRainbowColor();
       event.target.style.opacity = 1;
       event.target.style.backgroundColor = randomColor;
       rainbowBtn.style.backgroundColor = randomColor;
@@ -149,14 +149,15 @@ const coloring = (event) => {
 
 // Логика получения ярких цветов для радужного режима
 
-const getRandomRainbowColor = () => {
-  let HUE_ALL = 360;
+let hue = 0;
+const getRainbowColor = () => {
   let SATURATION_MAX = 85;
   let SATURATION_MIN = 75;
   let LIGHTNESS_MAX = 85;
   let LIGHTNESS_MIN = 80;
 
-  let hue = Math.floor(Math.random() * HUE_ALL);
+  // let hue = Math.floor(Math.random() * HUE_ALL);
+  hue = hue + 10;
   let saturation = Math.floor(
     Math.random() * (SATURATION_MAX - SATURATION_MIN + 1) + SATURATION_MIN,
   );
