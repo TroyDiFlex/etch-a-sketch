@@ -4,13 +4,17 @@ const sheet = document.querySelector(".sheet");
 const solidColoringBtn = document.querySelector("#solid-coloring");
 const eraserBtn = document.querySelector("#eraser");
 const rainbowBtn = document.querySelector("#rainbow");
+const smoothBtn = document.querySelector("#smooth");
 const clearBtn = document.querySelector("#clear");
 const inputRange = document.querySelector("#input-range");
 const inputDisplay = document.querySelector("#input-display");
+const colorPicker = document.querySelector("#color-picker");
+const allBtns = document.querySelectorAll("button");
+const header = document.querySelector("header");
 
 // Параметры по умолчанию
-
-let selectedColor = "lightpink";
+const defaultColor = "lightpink";
+let selectedColor = defaultColor;
 let pixelsQuantity = 30;
 let isHoldMouse = false;
 let currentMode = "solidColoring";
@@ -20,16 +24,19 @@ let pixels;
 
 const createPixels = (pixelsQuantity) => {
   sheet.style.setProperty("--pixels-quantity", pixelsQuantity);
-  let pixel;
-  const fragment = document.createDocumentFragment();
+
+  let fragment = document.createDocumentFragment();
+
   for (let i = 0; i < pixelsQuantity * pixelsQuantity; i++) {
-    pixel = document.createElement("div");
+    let pixel = document.createElement("div");
     pixel.classList.add("pixel");
     fragment.append(pixel);
   }
+
   sheet.append(fragment);
   pixels = document.querySelectorAll(".pixel");
 };
+
 createPixels(pixelsQuantity);
 
 const reCreatePixels = (pixelsQuantity) => {
@@ -52,21 +59,39 @@ inputRange.addEventListener("change", () => {
 
 // Переключение режимов
 
-solidColoringBtn.addEventListener("click", (event) => {
+solidColoringBtn.addEventListener("click", () => {
   currentMode = "solidColoring";
+  resetBtnsColor();
+  solidColoringBtn.style.backgroundColor = selectedColor;
 });
 
-eraserBtn.addEventListener("click", (event) => {
+eraserBtn.addEventListener("click", () => {
   currentMode = "eraser";
+  resetBtnsColor();
+  eraser.style.backgroundColor = defaultColor;
 });
 
-rainbowBtn.addEventListener("click", (event) => {
+rainbowBtn.addEventListener("click", () => {
   currentMode = "rainbow";
+  resetBtnsColor();
+  rainbowBtn.style.backgroundColor = selectedColor;
 });
 
-clearBtn.addEventListener("click", (event) => {
-  pixels.forEach((pixel) => pixel.style.removeProperty("background-color"));
+smoothBtn.addEventListener("click", () => {
+  currentMode = "smooth";
+  resetBtnsColor();
+  smoothBtn.style.backgroundColor = selectedColor;
 });
+
+clearBtn.addEventListener("click", () => {
+  pixels.forEach((pixel) => {
+    pixel.style.removeProperty("background-color");
+    pixel.style.removeProperty("opacity");
+  });
+});
+
+const resetBtnsColor = () =>
+  allBtns.forEach((btn) => btn.style.removeProperty("background-color"));
 
 // Логика зажатой лкм
 
@@ -75,6 +100,11 @@ window.addEventListener("mousedown", () => {
 });
 window.addEventListener("mouseup", () => {
   isHoldMouse = false;
+});
+
+// Логика изменения цвета
+colorPicker.addEventListener("change", () => {
+  selectedColor = colorPicker.value;
 });
 
 // Логика рисования
@@ -92,13 +122,27 @@ sheet.addEventListener("mouseover", (event) => {
 const coloring = (event) => {
   switch (currentMode) {
     case "solidColoring":
+      event.target.style.opacity = 1;
       event.target.style.backgroundColor = selectedColor;
+
       break;
     case "eraser":
       event.target.style.removeProperty("background-color");
+      event.target.style.removeProperty("opacity");
+
       break;
     case "rainbow":
-      event.target.style.backgroundColor = getRandomRainbowColor();
+      let randomColor = getRandomRainbowColor();
+      event.target.style.opacity = 1;
+      event.target.style.backgroundColor = randomColor;
+      rainbowBtn.style.backgroundColor = randomColor;
+
+      break;
+    case "smooth":
+      let currentOpacity = Number(event.target.style.opacity) + 0.1;
+      event.target.style.opacity = currentOpacity;
+      event.target.style.backgroundColor = selectedColor;
+
       break;
   }
 };
@@ -106,14 +150,24 @@ const coloring = (event) => {
 // Логика получения ярких цветов для радужного режима
 
 const getRandomRainbowColor = () => {
-  let hue = Math.floor(Math.random() * 360);
-  let saturation = Math.floor(Math.random() * 11 + 90);
-  let lightness = Math.floor(Math.random() * 11) + 40;
+  let HUE_ALL = 360;
+  let SATURATION_MAX = 85;
+  let SATURATION_MIN = 75;
+  let LIGHTNESS_MAX = 85;
+  let LIGHTNESS_MIN = 80;
+
+  let hue = Math.floor(Math.random() * HUE_ALL);
+  let saturation = Math.floor(
+    Math.random() * (SATURATION_MAX - SATURATION_MIN + 1) + SATURATION_MIN,
+  );
+  let lightness = Math.floor(
+    Math.random() * (LIGHTNESS_MAX - LIGHTNESS_MIN + 1) + LIGHTNESS_MIN,
+  );
   let currentColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   return currentColor;
 };
 
-// === Копипаста из DeepSeek. Поддержка телефонов ===
+// ======== Копипаста из DeepSeek. Поддержка телефонов ========
 
 // 1. CSS через JS (на всякий случай)
 sheet.style.touchAction = "none";

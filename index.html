@@ -9,29 +9,41 @@
   <body>
     <header>
       <div class="menu select-color">
-        <input type="color" id="colorPicker" value="#ff0000" />
+        <input type="color" id="color-picker" value="#ffb6c1" />
+      </div>
+
+      <div class="menu">
+        <button
+          id="solid-coloring"
+          type="button"
+          style="background-color: #ffb6c1"
+        >
+          Обычный
+        </button>
       </div>
       <div class="menu">
-        <button id="solid-coloring" type="button">Обычный режим</button>
+        <button id="smooth" type="button">Плавный</button>
       </div>
+
+      <div class="menu">
+        <button id="rainbow" type="button">Радуга</button>
+      </div>
+
       <div class="menu">
         <button id="eraser" type="button">Ластик</button>
       </div>
+
       <div class="menu">
-        <button id="rainbow" type="button">Радужный режим</button>
+        <button id="clear" type="button">Очистить всё</button>
       </div>
-      <div class="menu">
-        <button id="clear" type="button">Стереть всё</button>
-      </div>
+
       <div class="menu">
         <div id="input-display">32 x 32</div>
         <input type="range" id="input-range" min="8" max="64" value="32" />
       </div>
     </header>
 
-    <div class="sheet">
-      <!-- <div draggable="false" class="pixel"></div> -->
-    </div>
+    <div class="sheet"></div>
     <script src="script.js"></script>
   </body>
 </html>
