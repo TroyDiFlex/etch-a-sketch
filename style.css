@@ -170,7 +170,8 @@ button:hover {
   header {
     display: flex;
     flex-direction: row;
-    height: 15vmin;
+    flex-wrap: wrap;
+
     width: 70vmin;
   }
   .pixel:hover {
@@ -195,5 +196,164 @@ button:hover {
     margin: 0;
     overflow: hidden; /* Убирает прокрутку вообще */
     height: 100vh;
+  }
+}
+
+/* Существующие стили... */
+
+@media (max-width: 767px) {
+  body {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 10px 0;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  header {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 95vw;
+    height: auto;
+    padding: 10px;
+    gap: 8px;
+    order: 2;
+    margin-top: 10px;
+  }
+
+  .menu {
+    width: 30%;
+    height: 60px;
+    min-width: 60px;
+    margin: 2px 0;
+  }
+
+  button {
+    height: 44px;
+    width: 100%;
+    font-size: 14px;
+    padding: 0 5px;
+  }
+
+  button:hover {
+    height: 44px;
+    width: 100%;
+  }
+
+  #color-picker {
+    width: 50px;
+    height: 50px;
+  }
+
+  #color-picker:hover {
+    width: 50px;
+  }
+
+  /* Увеличиваем размер ползунка для касания */
+  #input-range {
+    margin: 15px 0;
+  }
+
+  #input-range::-webkit-slider-thumb {
+    height: 28px;
+    width: 28px;
+    margin-top: -10px;
+  }
+
+  #input-range::-moz-range-thumb {
+    height: 28px;
+    width: 28px;
+  }
+
+  #input-range::-webkit-slider-runnable-track {
+    height: 10px;
+  }
+
+  #input-range::-moz-range-track {
+    height: 10px;
+  }
+
+  #input-display {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .sheet {
+    width: 95vw;
+    height: 95vw;
+    max-width: 500px;
+    max-height: 500px;
+    order: 1;
+    margin-top: 5px;
+  }
+
+  /* Улучшения для touch-устройств */
+  .pixel {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  /* Отключаем hover-эффекты на тач-устройствах */
+  @media (hover: none) and (pointer: coarse) {
+    .pixel:hover {
+      border: 1px solid rgba(0, 0, 0, 0);
+    }
+
+    button:hover {
+      height: 44px;
+      width: 100%;
+    }
+
+    #color-picker:hover {
+      width: 50px;
+    }
+  }
+}
+
+/* Дополнительно для очень маленьких экранов */
+@media (max-width: 360px) {
+  .menu {
+    width: 28%;
+  }
+
+  button {
+    font-size: 12px;
+    height: 40px;
+  }
+
+  #color-picker {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+/* Для горизонтальной ориентации на мобильных */
+@media (max-width: 767px) and (orientation: landscape) {
+  body {
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px;
+  }
+
+  header {
+    width: 40%;
+    max-width: 200px;
+    order: 1;
+    margin-top: 0;
+  }
+
+  .sheet {
+    width: 55vw;
+    height: 55vw;
+    max-width: 400px;
+    max-height: 400px;
+    order: 2;
+  }
+
+  .menu {
+    width: 45%;
+    height: 50px;
   }
 }
