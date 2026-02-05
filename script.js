@@ -223,19 +223,31 @@ let cheatCode = 8;
 
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-const createRainbow = async (p) => {
-  // Добавили async
-  let pixelsQuantityForRainbow = 36;
-  reCreatePixels(pixelsQuantityForRainbow);
+const createRainbow = async () => {
+  // 1. Вычисляем шаг, чтобы пройти ровно 360 градусов по всем пикселям
+  const totalPixels = pixels.length;
+  const hueStep = 360 / totalPixels;
 
-  // Используем for...of вместо forEach для поддержки await
+  // Обнуляем глобальный hue для начала новой радуги
+  let localHue = 0;
+
   for (const pixel of pixels) {
-    let currentRainbowColor = getRainbowColor();
+    // 2. Генерируем цвет с учетом текущего шага
+    // Можно использовать твою функцию, передав туда hue,
+    // но для простоты сделаем расчет прямо здесь:
+    let saturation = Math.floor(Math.random() * (85 - 75 + 1) + 75);
+    let lightness = Math.floor(Math.random() * (85 - 80 + 1) + 80);
+
+    let currentRainbowColor = `hsl(${localHue}, ${saturation}%, ${lightness}%)`;
 
     pixel.style.opacity = 1;
     pixel.style.backgroundColor = currentRainbowColor;
     rainbowBtn.style.backgroundColor = currentRainbowColor;
 
+    // Увеличиваем значение для следующего пикселя
+    localHue += hueStep;
+
+    // Маленькая задержка для визуального эффекта "заполнения"
     await delay(0);
   }
 
