@@ -77,7 +77,7 @@ rainbowBtn.addEventListener("click", () => {
   resetBtnsColor();
   rainbowBtn.style.backgroundColor = selectedColor;
   rainbowСheatСounter++;
-  if (rainbowСheatСounter === 8) {
+  if (rainbowСheatСounter === cheatCode) {
     createRainbow();
     rainbowСheatСounter = 0;
   }
@@ -240,4 +240,6 @@ const createRainbow = async (p) => {
   }
 
   currentMode = "solidColoring";
+  resetBtnsColor();
+  solidColoringBtn.style.backgroundColor = selectedColor;
 };
