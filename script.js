@@ -13,6 +13,7 @@ const allBtns = document.querySelectorAll("button");
 const header = document.querySelector("header");
 
 // Параметры по умолчанию
+
 const defaultColor = "lightpink";
 let selectedColor = defaultColor;
 let pixelsQuantity = 30;
@@ -75,6 +76,11 @@ rainbowBtn.addEventListener("click", () => {
   currentMode = "rainbow";
   resetBtnsColor();
   rainbowBtn.style.backgroundColor = selectedColor;
+  rainbowСheatСounter++;
+  if (rainbowСheatСounter === 8) {
+    createRainbow();
+    rainbowСheatСounter = 0;
+  }
 });
 
 smoothBtn.addEventListener("click", () => {
@@ -132,10 +138,10 @@ const coloring = (event) => {
 
       break;
     case "rainbow":
-      let randomColor = getRainbowColor();
+      let currentRainbowColor = getRainbowColor();
       event.target.style.opacity = 1;
-      event.target.style.backgroundColor = randomColor;
-      rainbowBtn.style.backgroundColor = randomColor;
+      event.target.style.backgroundColor = currentRainbowColor;
+      rainbowBtn.style.backgroundColor = currentRainbowColor;
 
       break;
     case "smooth":
@@ -156,7 +162,6 @@ const getRainbowColor = () => {
   let LIGHTNESS_MAX = 85;
   let LIGHTNESS_MIN = 80;
 
-  // let hue = Math.floor(Math.random() * HUE_ALL);
   hue = hue + 10;
   let saturation = Math.floor(
     Math.random() * (SATURATION_MAX - SATURATION_MIN + 1) + SATURATION_MIN,
@@ -168,7 +173,7 @@ const getRainbowColor = () => {
   return currentColor;
 };
 
-// ======== Копипаста из DeepSeek. Поддержка телефонов ========
+// ======== Копипаста из нейронок для парочки фичей ========
 
 // 1. CSS через JS (на всякий случай)
 sheet.style.touchAction = "none";
@@ -212,3 +217,27 @@ function handleTouch(e) {
     }
   }
 }
+
+let rainbowСheatСounter = 0;
+let cheatCode = 8;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+const createRainbow = async (p) => {
+  // Добавили async
+  let pixelsQuantityForRainbow = 36;
+  reCreatePixels(pixelsQuantityForRainbow);
+
+  // Используем for...of вместо forEach для поддержки await
+  for (const pixel of pixels) {
+    let currentRainbowColor = getRainbowColor();
+
+    pixel.style.opacity = 1;
+    pixel.style.backgroundColor = currentRainbowColor;
+    rainbowBtn.style.backgroundColor = currentRainbowColor;
+
+    await delay(0);
+  }
+
+  currentMode = "solidColoring";
+};
